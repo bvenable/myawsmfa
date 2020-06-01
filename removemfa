@@ -1,0 +1,4 @@
+#!/bin/bash
+aws configure set profile.mfa.aws_access_key_id nokey
+aws configure set profile.mfa.aws_secret_access_key nokey
+aws configure set profile.mfa.aws_session_token notoken

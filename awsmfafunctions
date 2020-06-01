@@ -1,0 +1,7 @@
+complete -C '/usr/local/bin/aws_completer' aws
+function usemfa {
+	export AWS_PROFILE=mfa
+}
+function nomfa {
+	unset AWS_PROFILE
+}

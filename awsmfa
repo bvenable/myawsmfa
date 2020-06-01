@@ -1,0 +1,17 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	echo "usage: $0 <token code>"
+	exit 1
+fi
+if [ -z "$AWSMFASERIAL" ]; then
+	echo "need to set AWSMFASERIAL"
+	exit 1
+fi
+tokendata=$(aws sts get-session-token --output text --serial-number $AWSMFASERIAL --token-code $1)
+if [ -z "$tokendata" ]; then
+	echo "unable to get token data"
+	exit 1
+fi
+aws configure set profile.mfa.aws_access_key_id $(echo $tokendata | awk '{print $2}')
+aws configure set profile.mfa.aws_secret_access_key $(echo $tokendata | awk '{print $4}')
+aws configure set profile.mfa.aws_session_token $(echo $tokendata | awk '{print $5}')
