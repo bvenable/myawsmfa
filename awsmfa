@@ -3,7 +3,7 @@ if [ -z "$1" ]; then
 	echo "usage: $0 <token code>"
 	exit 1
 fi
-AWSMFASERIAL=$(aws sts get-caller-identity --output json | jq -r .Arn | sed 's/:user\//:mfa\//')
+AWSMFASERIAL=$(aws sts get-caller-identity --output text | cut -f2 | sed 's/:user/:mfa/')
 if [ -z "$AWSMFASERIAL" ]; then
 	echo "need to set your base AWS keys"
 	exit 1
